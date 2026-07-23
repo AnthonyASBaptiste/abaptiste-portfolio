@@ -1,0 +1,14 @@
+services:
+  # Next.js Web App
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-web
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+
+volumes:
+  node_modules:
