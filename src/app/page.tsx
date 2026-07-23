@@ -12,67 +12,67 @@ export default function Home() {
       id: '01',
       title: 'Research Navigator',
       category: 'AI Multi-Agent Validation Engine',
-      desc: 'Active validation coach for startups using a multi-agent orchestration engine. Features an LLM-as-a-Judge audit engine, Go proxy runtime, and real-time Vue 3 Traffic Light UI.',
-      tech: ['Vue 3', 'Go Proxy', 'Python LLM-as-a-Judge', 'Tavily API'],
+      desc: 'An adversarial validation platform that stress-tests startup concepts against market metrics, economics, and acquisition costs. Returns a Red / Yellow / Green verdict backed by structured competitive dossiers.',
+      tech: ['Vue 3', 'Go Proxy', 'Python', 'Tavily API'],
       demoUrl: '/projects/research-navigator',
-      badge: 'STARRED FLAGSHIP',
+      badge: 'FEATURED PROJECT',
       starred: true,
-      metrics: '5-Agent Pipeline • 100% Verifiable Audits',
+      metrics: 'Adversarial Risk Verification & Dossier Generation',
     },
     {
       id: '02',
       title: 'MyBriefcase Legal Suite',
       category: 'Legal Tech / Document Pipeline',
-      desc: 'Automated legal PDF court bundle compiler (pdf-lib), table-of-contents indexer, drag-and-drop reordering, and S3 presigned filing storage.',
+      desc: 'A court-compliant document bundling tool. Aggregates multiple legal PDFs, generates automated cover pages and indices, and uploads compiled briefs to AWS S3.',
       tech: ['Next.js 16', 'React 19', 'AWS S3', 'pdf-lib'],
       demoUrl: '#',
-      badge: 'STARRED FLAGSHIP',
+      badge: 'FEATURED PROJECT',
       starred: true,
-      metrics: 'Court Compliant PDF Engine • Presigned S3',
+      metrics: 'PDF Compilation Engine • Presigned URLs',
     },
     {
       id: '03',
       title: 'Bookman Enterprise Data Mesh',
-      category: 'GCP PDE / Multi-DB Natural Language Search',
-      desc: 'Modernized multi-database ETL pipeline (Bookman, Salesman, Adman) powered by Dataflow, BigQuery ML, and Vertex AI Vector Search for CSR natural language queries.',
+      category: 'Multi-DB Search Engine',
+      desc: 'Consolidates customer support records from legacy databases. Transforms SQL tables via Python ETL scripts to run semantic lookups using BigQuery ML and Vertex AI Vector Search.',
       tech: ['Python ETL', 'GCP BigQuery ML', 'Vertex AI Vector Search', 'Next.js'],
       demoUrl: '#',
       badge: 'GCP PDE SHOWCASE',
       starred: false,
-      metrics: 'Hybrid Vector Search • BigQuery ML',
+      metrics: 'Vector Indexing • SQL Aggregation',
     },
     {
       id: '04',
       title: 'Enterprise RevOps Platform',
       category: 'B2B SaaS / Revenue Operations',
-      desc: 'Merged inhouse-crm & iyd-seeding-project. Top-of-funnel lead seeding, SendGrid campaign logs, multi-tenant RBAC, and MRR/NRR deal pipelines.',
+      desc: 'Merged CRM and lead-seeding tool. Tracks sales outreach campaigns, coordinates target lead imports, and manages MRR pipelines.',
       tech: ['Next.js 15', 'Prisma', 'Neon Postgres', 'Tailwind CSS v4'],
       demoUrl: '#',
       badge: 'MERGED SAAS',
       starred: false,
-      metrics: 'Dual-Auth (MSAL/JWT) • Neon Branching',
+      metrics: 'Neon Database Branching • Clerk SSO',
     },
     {
       id: '05',
       title: 'Newsletter Herald',
-      category: 'Serverless AI Extraction',
-      desc: 'Document parsing pipeline exposing a serverless endpoint for automated email newsletter ingestion and LLM summarization.',
+      category: 'Serverless Data Extraction',
+      desc: 'An automated document processing pipeline. Parses incoming PDF and Word newsletters sent via email and extracts text summaries using serverless Cloud Run APIs.',
       tech: ['FastAPI', 'Claude API', 'Cloud Run', 'Python'],
       demoUrl: '#',
       badge: 'AUTOMATION PIPELINE',
       starred: false,
-      metrics: 'Auto-Routing LLM Token Engine',
+      metrics: 'Asynchronous Ingestion Endpoints',
     },
     {
       id: '06',
       title: 'PulseApp (Yello Promises)',
-      category: 'HR Tech / Recognition Platform',
-      desc: 'Real-time peer-to-peer appreciation platform, points allocation engine, and Azure Blob storage feed stream.',
+      category: 'HR Tech / Peer Recognition',
+      desc: 'A peer-to-peer appreciation feed. Implements points allocation rules and real-time activity updates with Azure Blob file attachments.',
       tech: ['Next.js', 'Azure Storage', 'Redux Toolkit', 'Prisma'],
       demoUrl: '#',
       badge: 'ENTERPRISE HR',
       starred: false,
-      metrics: 'Real-Time Points Allocation Stream',
+      metrics: 'Transaction-Safe Points Ledger',
     },
   ];
 
@@ -85,15 +85,15 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2 text-[#00f0ff]">
             <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping"></span>
-            SYSTEM // OPERATIONAL
+            SYSTEM // ACTIVE
           </span>
           <span className="hidden sm:inline text-slate-600">|</span>
-          <span className="hidden sm:inline">REGION: CARIBBEAN (T&T)</span>
+          <span>LOCATION: TRINIDAD & TOBAGO</span>
           <span className="hidden md:inline text-slate-600">|</span>
-          <span className="hidden md:inline">ROLE: SR. SOFTWARE ENGINEER @ MEDIAL HEALTH</span>
+          <span className="hidden md:inline">ROLE: SENIOR SOFTWARE ENGINEER @ MEDIAL HEALTH</span>
         </div>
         <div className="text-slate-400 flex items-center gap-3">
-          <span>GEO SEARCH READY</span>
+          <span>AI SEARCH OPTIMIZED</span>
           <span className="text-emerald-400">[GPTBot/Claude/Perplexity ALLOWED]</span>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#00f0ff]/10 to-transparent pointer-events-none"></div>
             
             <div className="text-xs font-mono-code text-[#00f0ff] tracking-widest uppercase mb-4 flex items-center gap-2">
-              <Terminal className="w-4 h-4" /> ARCHITECT_IDENTITY // v2026.7
+              <Terminal className="w-4 h-4" /> IDENTITY // v2026.7
             </div>
 
             <h1 className="text-4xl font-display font-extrabold text-white tracking-tight leading-none mb-4">
@@ -115,22 +115,22 @@ export default function Home() {
             </h1>
 
             <p className="text-sm font-mono-code text-[#f59e0b] mb-6">
-              AI Software Architect & Senior Engineer
+              Senior Software Engineer & AI Architect
             </p>
 
             <p className="text-slate-300 text-sm leading-relaxed mb-8 font-sans">
-              Bridging experimental LLM architectures with production-grade enterprise systems. Specializing in multi-agent orchestration, high-performance Go proxies, and GCP serverless data pipelines.
+              Specializing in distributed data systems, multi-agent pipelines, and cloud database architecture. Designing clean, verifiable software solutions for Caribbean and international enterprise contexts.
             </p>
 
             {/* Architecture Metrics HUD */}
             <div className="border-t border-[#1e293b] pt-6 space-y-4 font-mono-code text-xs">
               <div className="flex justify-between items-center text-slate-400">
-                <span>MOAT / LOCATION</span>
-                <span className="text-slate-200">Trinidad & Tobago / Caribbean</span>
+                <span>HEADQUARTERS</span>
+                <span className="text-slate-200">Trinidad & Tobago</span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
-                <span>AI PATTERN</span>
-                <span className="text-[#00f0ff]">LLM-as-a-Judge Audit Engine</span>
+                <span>DESIGN PARADIGM</span>
+                <span className="text-[#00f0ff]">Independent Auditor / Judge Models</span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>PRIMARY STACK</span>
@@ -148,7 +148,7 @@ export default function Home() {
                 href="#projects"
                 className="w-full py-3.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-center text-sm hover:bg-cyan-300 transition-all shadow-lg shadow-[#00f0ff]/20"
               >
-                VIEW ARCHITECTURAL SYSTEMS →
+                VIEW CASE STUDIES →
               </a>
               <Link
                 href="/blog"
@@ -162,20 +162,20 @@ export default function Home() {
           {/* Competency Card */}
           <div className="p-6 bg-[#0e131f]/60 border border-[#1e293b] rounded-2xl space-y-4">
             <h3 className="text-xs font-mono-code uppercase tracking-widest text-slate-400 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#00f0ff]" /> CORE ENGINEERING MOAT
+              <Layers className="w-4 h-4 text-[#00f0ff]" /> TECHNICAL FOCUS
             </h3>
             <ul className="space-y-3 text-xs font-mono-code text-slate-300">
               <li className="flex items-start gap-2">
                 <span className="text-[#00f0ff]">▸</span>
-                <span><strong>Multi-Agent Orchestration:</strong> Asynchronous Python brains with brutal gatekeepers.</span>
+                <span><strong>Multi-Agent Orchestration:</strong> Independent verification loops and web scrapers.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[#00f0ff]">▸</span>
-                <span><strong>High-Performance Proxies:</strong> Go WS/HTTP runtimes for zero-latency execution.</span>
+                <span><strong>High-Performance Runtimes:</strong> Asynchronous Go WebSocket proxies and connection hubs.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-[#00f0ff]">▸</span>
-                <span><strong>GCP Serverless Data Mesh:</strong> BigQuery ML & Vertex AI Vector Search pipelines.</span>
+                <span><strong>Serverless Data Systems:</strong> BigQuery ML, Vertex AI Vector Search, and Neon Postgres.</span>
               </li>
             </ul>
           </div>
