@@ -12,8 +12,8 @@ export default function Home() {
       id: '01',
       title: 'Research Navigator',
       category: 'AI Multi-Agent Validation Engine',
-      desc: 'An adversarial validation platform that stress-tests startup concepts against market metrics, economics, and acquisition costs. Returns a Red / Yellow / Green verdict backed by structured competitive dossiers.',
-      tech: ['Vue 3', 'Go Proxy', 'Python', 'Tavily API'],
+      desc: 'An automated validation platform that stress-tests business models against market size, unit economics, and customer acquisition costs. Generates structured risk evaluation dossiers for startup validation.',
+      tech: ['Vue 3', 'Go', 'Python', 'WebSockets'],
       demoUrl: '/projects/research-navigator',
       badge: 'FEATURED PROJECT',
       starred: true,
@@ -111,7 +111,7 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl font-display font-extrabold text-white tracking-tight leading-none mb-4">
-              Anthony Baptiste
+              Anthony A.S Baptiste
             </h1>
 
             <p className="text-sm font-mono-code text-[#f59e0b] mb-6">

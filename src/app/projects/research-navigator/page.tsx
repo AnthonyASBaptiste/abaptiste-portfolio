@@ -12,24 +12,24 @@ export const metadata: Metadata = {
 export default function ResearchNavigatorCaseStudy() {
   const agentRoster = [
     {
-      role: 'Assessor (Entry Validator)',
-      tech: 'Python / OpenAI GPT-4o',
-      function: 'Evaluates user inputs against validation rubrics. Rejects incomplete assumptions before allowing deeper processing.',
+      role: 'Input Validator',
+      tech: 'Validation Engine',
+      function: 'Evaluates baseline assumptions against structural validation rubrics.',
     },
     {
-      role: 'Planner (Task Coordinator)',
-      tech: 'Python / Anthropic Claude',
-      function: 'Formulates structured research phases and lists hypotheses for targeted evaluation.',
+      role: 'Research Coordinator',
+      tech: 'Orchestration Service',
+      function: 'Determines key testing parameters and structures automated evaluation stages.',
     },
     {
-      role: 'Researcher (Information Retrieval)',
-      tech: 'Python / Tavily API / Groq',
-      function: 'Performs live web indexing and extracts competitive data signals.',
+      role: 'Market Indexer',
+      tech: 'Data Ingestion Service',
+      function: 'Gathers competitive signals and pricing references from online data sets.',
     },
     {
-      role: 'Auditor (LLM-as-a-Judge)',
-      tech: 'Python / Custom Evaluator Model',
-      function: 'Audits retrieved evidence data, checks source reliability, and writes final assessment reports.',
+      role: 'Evaluation Auditor',
+      tech: 'Analysis Engine',
+      function: 'Reviews and scores accumulated metrics to output a final validation brief.',
     },
   ];
 
@@ -61,7 +61,7 @@ export default function ResearchNavigatorCaseStudy() {
           </h1>
 
           <p className="text-slate-300 text-lg font-sans leading-relaxed max-w-3xl">
-            An adversarial validation platform that stress-tests startup concepts against market metrics, unit economics, and acquisition costs. It shifts startup validation from static outlines to automated, gate-driven research loops that generate structured competitive dossiers.
+            An automated validation platform that stress-tests business models against market size, unit economics, and customer acquisition costs. It shifts startup validation from static outlines to automated, gate-driven research loops that generate structured evaluation dossiers.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4 font-mono-code text-sm">
@@ -90,9 +90,9 @@ export default function ResearchNavigatorCaseStudy() {
             {/* Tier 1: Frontend */}
             <div className="p-6 bg-[#0e131f] border border-[#1e293b] rounded-2xl space-y-3">
               <div className="text-[#00f0ff] font-bold">TIER 1 // FRONTEND PANEL</div>
-              <h3 className="text-base font-display font-bold text-white">Vue 3 + Pinia Store</h3>
+              <h3 className="text-base font-display font-bold text-white">Client Dashboard</h3>
               <p className="text-slate-400 font-sans text-xs leading-relaxed">
-                Renders the live Red / Yellow / Green dashboard. Tracks validation scores, active user feedback, and dossier download requests.
+                Renders interactive metrics status indicators. Manages validation scores, active user feedback, and dossier export formats.
               </p>
               <div className="pt-2 text-[11px] text-slate-500 border-t border-[#1e293b]">
                 Stack: Vue 3, Pinia, Tailwind CSS
@@ -102,9 +102,9 @@ export default function ResearchNavigatorCaseStudy() {
             {/* Tier 2: Go Proxy */}
             <div className="p-6 bg-[#0e131f] border border-[#00f0ff]/40 rounded-2xl space-y-3 shadow-lg shadow-[#00f0ff]/5">
               <div className="text-[#f59e0b] font-bold">TIER 2 // WEBSOCKET ROUTER</div>
-              <h3 className="text-base font-display font-bold text-white">Go API Proxy</h3>
+              <h3 className="text-base font-display font-bold text-white">API Connection Hub</h3>
               <p className="text-slate-400 font-sans text-xs leading-relaxed">
-                Manages WebSocket streams and routes messages between the client dashboard and the validation runner. Handles auth checks and GORM database updates.
+                Coordinates data streaming, user validation, and message routing. Provides low-latency connections to the backend processing services.
               </p>
               <div className="pt-2 text-[11px] text-slate-500 border-t border-[#1e293b]">
                 Stack: Go (Golang), WebSockets, Gin
@@ -114,12 +114,12 @@ export default function ResearchNavigatorCaseStudy() {
             {/* Tier 3: Python AI Brain */}
             <div className="p-6 bg-[#0e131f] border border-[#1e293b] rounded-2xl space-y-3">
               <div className="text-[#00f0ff] font-bold">TIER 3 // AGENT ENGINE</div>
-              <h3 className="text-base font-display font-bold text-white">Python Agent Service</h3>
+              <h3 className="text-base font-display font-bold text-white">Analysis Service</h3>
               <p className="text-slate-400 font-sans text-xs leading-relaxed">
-                Coordinates five agent workers. Runs web scrapers, checks TAM/CAC indicators, and builds structured report dossiers in Markdown/HTML.
+                Orchestrates automated evaluation cycles. Runs indexing tasks, evaluates business metrics, and builds structured evaluation dossiers.
               </p>
               <div className="pt-2 text-[11px] text-slate-500 border-t border-[#1e293b]">
-                Stack: Python, FastAPI, Gunicorn
+                Stack: Python, FastAPI
               </div>
             </div>
 
@@ -130,7 +130,7 @@ export default function ResearchNavigatorCaseStudy() {
         <section className="p-8 bg-[#0e131f] border border-[#1e293b] rounded-2xl space-y-6">
           <div className="border-b border-[#1e293b] pb-4 flex items-center justify-between">
             <h2 className="text-xs font-mono-code text-[#00f0ff] uppercase tracking-widest flex items-center gap-2">
-              <Activity className="w-4 h-4" /> 02 // ADVERSARIAL VERDICT FLOW
+              <Activity className="w-4 h-4" /> 02 // VALIDATION STATUS PATHWAY
             </h2>
             <span className="text-xs font-mono-code text-[#f59e0b]">QUALIFICATION GATES</span>
           </div>
@@ -138,19 +138,19 @@ export default function ResearchNavigatorCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono-code text-xs">
             <div className="p-5 rounded-xl bg-red-950/20 border border-red-500/30 space-y-2">
               <div className="flex items-center gap-2 text-red-400 font-bold">
-                <XCircle className="w-4 h-4" /> RED // HIGH RISK
+                <XCircle className="w-4 h-4" /> RED // STAGE BLOCKED
               </div>
               <p className="text-slate-300 font-sans text-xs">
-                Assessor flags unvalidated assumptions (e.g. unprovable CAC or weak demand signals). Pauses the workflow until verifiable data is provided.
+                System pauses execution due to unbacked or missing market metrics. The workflow restarts once target evidence is provided.
               </p>
             </div>
 
             <div className="p-5 rounded-xl bg-amber-950/20 border border-amber-500/30 space-y-2">
               <div className="flex items-center gap-2 text-amber-400 font-bold">
-                <AlertTriangle className="w-4 h-4" /> YELLOW // CAUTION
+                <AlertTriangle className="w-4 h-4" /> YELLOW // ACTIVE AUDIT
               </div>
               <p className="text-slate-300 font-sans text-xs">
-                Partial validation. System prompts the user for specific evidence (e.g. target pricing validation) while executing secondary scrapers.
+                Targeted information collection. System coordinates data scans and queries relevant data sets.
               </p>
             </div>
 
@@ -159,7 +159,7 @@ export default function ResearchNavigatorCaseStudy() {
                 <CheckCircle2 className="w-4 h-4" /> GREEN // VERIFIED
               </div>
               <p className="text-slate-300 font-sans text-xs">
-                Milestone approved. Verification model registers quantitative proof and records primary source citations.
+                Milestone approved. Evaluation engine marks verified data points and records primary source citations.
               </p>
             </div>
           </div>
