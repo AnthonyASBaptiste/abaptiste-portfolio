@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🕸️ abaptiste-portfolio (v2026)
 
-## Getting Started
+An authoritative, AI-optimized portfolio and digital CV designed to establish a Senior Software Engineer & AI Architect persona. Built using Next.js 15, React 19, and Tailwind CSS v4.
 
-First, run the development server:
+---
 
+## 🎨 Design System: The Architectural Monolith
+This portfolio deliberately avoids generic SaaS templates. Its design choices reflect industrial precision and high-end technical publishing:
+* **Typography:** `Space Grotesk` (Geometric display headlines) + `JetBrains Mono` (Monospaced structural telemetry).
+* **Color Palette:** Obsidian Slate (`#07090e`) surface, Blueprint Grid accents (`#1e293b`), and Telemetry Cyan (`#00f0ff`) / Architectural Gold (`#f59e0b`) signals.
+* **Layout:** Asymmetric dual-pane interface with a sticky Telemetry HUD on the left and a prioritized Systems Catalog on the right.
+
+---
+
+## 🌐 Generative Engine Optimization (GEO)
+This codebase is optimized for AI search engine crawlers (ChatGPT, Claude, Perplexity, Gemini) to maximize citations:
+* **Robots Configuration (`robots.ts`):** Explicitly grants index access to `GPTBot`, `Claude-Web`, `PerplexityBot`, and `Googlebot`.
+* **JSON-LD Schema (`JsonLd.tsx`):** Standardizes `Person`, `SoftwareApplication`, and `Dataset` structured schemas.
+* **Sitemap Generation (`sitemap.ts`):** Dynamic sitemap crawler for search discovery.
+
+---
+
+## 🎯 Systems Catalog (7 Featured Projects)
+
+### 01 // Research Navigator
+* **Category:** AI Multi-Agent Validation Engine
+* **Showcase Page:** `/projects/research-navigator`
+* **Architecture:** Vue 3 (Frontend) + Go (High-Performance Proxy Runtime) + Python (asynchronous Multi-Agent Engine featuring Tavily search, a Brutal Gatekeeper, and an LLM-as-a-Judge auditor).
+
+### 02 // MyBriefcase Legal Suite
+* **Category:** Legal Tech / Document Pipeline
+* **Architecture:** Next.js 16 + React 19 + AWS S3 + `pdf-lib`. Automated PDF court bundle compiler with automated cover pages, indexer, drag-and-drop file reordering, and presigned S3 uploads.
+
+### 03 // Bookman Enterprise Data Mesh
+* **Category:** GCP PDE Showcase / Multi-DB Search
+* **Architecture:** Dataflow ETL + GCP BigQuery ML + Vertex AI Vector Search. Aggregates legacy customer service databases (Bookman, Salesman, Adman) for natural language semantic query lookups.
+
+### 04 // Enterprise RevOps Platform
+* **Category:** B2B SaaS / Revenue Operations
+* **Architecture:** Next.js 15 + Prisma + Neon Serverless PostgreSQL. Integrates lead seeding, SendGrid campaign logs, and active deal pipelines.
+
+### 05 // Newsletter Herald
+* **Category:** Serverless AI Extraction
+* **Architecture:** FastAPI + Claude API + Cloud Run. Document parsing pipeline exposing an automated email ingestion webhook.
+
+### 06 // PulseApp (Yello Promises)
+* **Category:** HR Tech / Peer Recognition
+* **Architecture:** Next.js + Azure Blob Storage + Redux Toolkit. Real-time points allocation and activity feed.
+
+### 07 // Legal Document Sorter & OpenClaw Control
+* **Category:** Desktop AI & Agent Tooling
+* **Architecture:** Python Watchdog + Docker + OpenClaw + Tailscale. Desktop file classifier sync watchdog paired with an OpenClaw agent monitoring control panel.
+
+---
+
+## 🚀 Getting Started
+
+First, install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Generate a production build:
+```bash
+npm run build
+```
