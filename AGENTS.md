@@ -1,5 +1,12 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Agent Development Rules & Branching Policy
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+## 🌿 Branching Rules
+- **Default Branch**: `develop`. All AI agent PRs (Jules, Antigravity, etc.) MUST target `develop`.
+- **Production Branch**: `main`. Reserved strictly for tagged releases.
+- **Branch Naming**: `ab-<type>-<short-description>` (e.g., `ab-feat-nav`, `ab-fix-footer`, `ab-chore-cleanup`).
+
+## ⚡ Vercel Build Optimization
+- Include `[skip vercel]` in commit messages for minor PRs, chores, and docs updates to prevent consuming Vercel free tier build minutes.
+
+## 📖 Next.js 16 Rules
+This project uses Next.js 16 (Turbopack). Read `node_modules/next/dist/docs/` before writing custom server code.

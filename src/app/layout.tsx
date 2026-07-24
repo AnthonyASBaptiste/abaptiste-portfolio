@@ -21,7 +21,9 @@ export const metadata: Metadata = {
   title: 'Anthony Baptiste | Senior AI Architect & Software Engineer',
   description:
     'Senior Software Engineer at Medial Health LLC. AI Architect specializing in multi-agent systems, high-performance Go runtimes, and GCP cloud data engineering.',
+  manifest: '/site.webmanifest',
 };
+
 
 export default function RootLayout({
   children,
