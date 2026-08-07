@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { PersonJsonLd } from '@/components/JsonLd';
 import { getAllPosts } from '@/lib/blog';
-import { Terminal, Cpu, Database, ShieldCheck, ArrowUpRight, Star, ExternalLink, Activity, Layers, Github, Linkedin } from 'lucide-react';
+import { Terminal, Star, ExternalLink, Activity, Layers } from 'lucide-react';
+import { Github, Linkedin } from '@/components/Icons';
 
 export default function Home() {
   const posts = getAllPosts();
@@ -243,7 +244,7 @@ export default function Home() {
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex items-center gap-3">
                     <span className="font-mono-code text-xs font-bold text-slate-500 group-hover:text-[#00f0ff] transition-colors">
-                      {proj.id} //
+                      {proj.id}
                     </span>
                     <span className="text-xs font-mono-code text-[#00f0ff] flex items-center gap-1">
                       {proj.starred && <Star className="w-3.5 h-3.5 fill-[#00f0ff] text-[#00f0ff]" />}

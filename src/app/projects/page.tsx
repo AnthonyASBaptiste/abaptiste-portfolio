@@ -1,6 +1,5 @@
-'use use client';
-// Note: Mark client component for interactive filtering
 'use client';
+
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -8,16 +7,11 @@ import {
   ArrowLeft, 
   ExternalLink, 
   Activity, 
-  Layers, 
   Search, 
-  Terminal, 
-  Cpu, 
-  Database, 
   Star,
-  Github,
-  Linkedin,
   ChevronRight
 } from 'lucide-react';
+import { Github, Linkedin } from '@/components/Icons';
 
 export default function ProjectsCatalog() {
   const [filter, setFilter] = useState('ALL');
@@ -256,7 +250,7 @@ export default function ProjectsCatalog() {
                       {/* Card Header */}
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <span className="font-mono-code text-xs text-slate-500">
-                          {proj.id} // <span className="text-[#00f0ff]">{proj.category}</span>
+                          {proj.id} <span className="text-[#00f0ff]">{proj.category}</span>
                         </span>
                         <span
                           className={`px-2 py-0.5 text-[9px] font-mono-code font-bold uppercase tracking-wider rounded border ${
