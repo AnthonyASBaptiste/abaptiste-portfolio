@@ -155,12 +155,12 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-[#1e293b] flex flex-col gap-3">
-              <a
-                href="#projects"
+              <Link
+                href="/projects"
                 className="w-full py-3.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-center text-sm hover:bg-cyan-300 transition-all shadow-lg shadow-[#00f0ff]/20"
               >
                 VIEW CASE STUDIES →
-              </a>
+              </Link>
               <Link
                 href="/blog"
                 className="w-full py-3 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
