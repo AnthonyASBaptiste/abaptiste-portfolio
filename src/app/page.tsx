@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { PersonJsonLd } from '@/components/JsonLd';
 import { getAllPosts } from '@/lib/blog';
-import { Terminal, Cpu, Database, ShieldCheck, ArrowUpRight, Star, ExternalLink, Activity, Layers } from 'lucide-react';
+import { Terminal, Star, ExternalLink, Activity, Layers } from 'lucide-react';
+import { Github, Linkedin } from '@/components/Icons';
 
 export default function Home() {
   const posts = getAllPosts();
@@ -56,12 +57,12 @@ export default function Home() {
       id: '05',
       title: 'Newsletter Herald',
       category: 'Serverless Data Extraction',
-      desc: 'An automated document processing pipeline. Parses incoming PDF and Word newsletters sent via email and extracts text summaries using serverless Cloud Run APIs.',
-      tech: ['FastAPI', 'Claude API', 'Cloud Run', 'Python'],
-      demoUrl: '#',
-      badge: 'AUTOMATION PIPELINE',
-      starred: false,
-      metrics: 'Asynchronous Ingestion Endpoints',
+      desc: 'An automated document processing pipeline. Parses incoming PDF and Word newsletters, standardizes metadata, generates multi-stage AI summaries, and dispatches weekly newsletters to a parish subscriber directory.',
+      tech: ['Next.js 15', 'FastAPI', 'Neon Postgres', 'Cloudflare R2'],
+      demoUrl: 'https://newsletter-herald.vercel.app',
+      badge: 'FEATURED PROJECT',
+      starred: true,
+      metrics: 'Dual LLM Route • R2 Proxy Delivery',
     },
     {
       id: '06',
@@ -73,6 +74,17 @@ export default function Home() {
       badge: 'ENTERPRISE HR',
       starred: false,
       metrics: 'Transaction-Safe Points Ledger',
+    },
+    {
+      id: '07',
+      title: 'Legal Document Sorter',
+      category: 'Desktop Automation / File Pipeline',
+      desc: 'A local background daemon that monitors download directories, uses regular expressions to classify legal documents by case caption, and automatically synchronizes them to Google Drive and OneDrive folders.',
+      tech: ['Python', 'Watchdog', 'SQLite', 'PyPDF', 'python-docx'],
+      demoUrl: 'https://github.com/AnthonyASBaptiste/legal-document-sorter',
+      badge: 'DESKTOP TOOL',
+      starred: false,
+      metrics: 'Safe Deletion Ingestion Loop',
     },
   ];
 
@@ -144,18 +156,36 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="mt-8 pt-6 border-t border-[#1e293b] flex flex-col gap-3">
-              <a
-                href="#projects"
+              <Link
+                href="/projects"
                 className="w-full py-3.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-center text-sm hover:bg-cyan-300 transition-all shadow-lg shadow-[#00f0ff]/20"
               >
                 VIEW CASE STUDIES →
-              </a>
+              </Link>
               <Link
                 href="/blog"
                 className="w-full py-3 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
               >
                 <Activity className="w-3.5 h-3.5 text-[#00f0ff]" /> EXPLORE TECHNICAL BLOG
               </Link>
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href="https://github.com/AnthonyASBaptiste"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="py-3 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
+                >
+                  <Github className="w-3.5 h-3.5 text-[#00f0ff]" /> GITHUB
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/anthonybaptiste/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="py-3 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-[#00f0ff]" /> LINKEDIN
+                </a>
+              </div>
             </div>
           </div>
 
@@ -214,7 +244,7 @@ export default function Home() {
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex items-center gap-3">
                     <span className="font-mono-code text-xs font-bold text-slate-500 group-hover:text-[#00f0ff] transition-colors">
-                      {proj.id} //
+                      {proj.id}
                     </span>
                     <span className="text-xs font-mono-code text-[#00f0ff] flex items-center gap-1">
                       {proj.starred && <Star className="w-3.5 h-3.5 fill-[#00f0ff] text-[#00f0ff]" />}

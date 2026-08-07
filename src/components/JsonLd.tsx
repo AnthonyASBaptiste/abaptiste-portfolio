@@ -26,7 +26,8 @@ export function PersonJsonLd() {
       'Revenue Operations (RevOps)',
     ],
     sameAs: [
-      'https://github.com/CBCGaming',
+      'https://github.com/AnthonyASBaptiste',
+      'https://www.linkedin.com/in/anthonybaptiste/',
       'https://discover.research-navigator.ai',
     ],
     description:
