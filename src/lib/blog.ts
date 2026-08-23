@@ -10,6 +10,47 @@ export interface BlogPost {
 
 export const samplePosts: BlogPost[] = [
   {
+    slug: 'cold-turkey-windows-to-linux',
+    title: 'Going Cold Turkey: Wiping Windows and Taming Modern Linux on a Gaming Laptop',
+    excerpt:
+      'No dual-boot, no safety net. What happened when I wiped Windows 11 on a Razer Blade 14 (RTX 4070) for Fedora Linux—from package manager whiplash to ALC298 speaker verbs and agentic dev setups.',
+    date: '2026-08-23',
+    readTime: '5 min read',
+    tags: ['Linux', 'Fedora', 'DevOps', 'Hardware', 'AI Engineering'],
+    content: `
+# Going Cold Turkey: Wiping Windows and Taming Modern Linux on a Gaming Laptop
+
+Most transitions from Windows to Linux fail at the same failure point: the dual-boot safety net. When an audio driver acts up or a game doesn't launch instantly, it takes ten seconds to reboot back into the comfort of Windows.
+
+To break that reflex, I went cold turkey. One drive, one OS: Fedora Linux 44 KDE on a Razer Blade 14 (AMD Ryzen + NVIDIA GeForce RTX 4070). Here is the field report from Day 1.
+
+## 1. Package Management Whiplash: Where is APT?
+
+Coming from Debian-centric tutorials and Windows installers, the first instinct is to double-click a .deb or reach for apt. On Fedora, native packages are RPMs managed by dnf.
+
+Understanding that modern Linux binaries can be cleanly extracted or sandboxed (via flatpaks, tarballs in /opt, or isolated python virtual environments with pipx) instantly cleared up the mental friction.
+
+## 2. Waking the Silicon: Discrete GPU & Speaker Verbs
+
+Modern gaming laptops feature complex hybrid graphics and proprietary audio amplifiers. Two hurdles had to be solved immediately:
+
+- **RTX 4070 Graphics**: The default open-source nouveau driver is incapable of re-clocking modern Ada Lovelace GPUs. Enabling RPM Fusion and building the official akmod-nvidia module gave full access to Vulkan, CUDA, and Steam Proton.
+- **Realtek ALC298 Amplifier**: While software volume bars bounced happily in PipeWire, the laptop speakers remained completely silent. The cause? Razer's proprietary smart amp requires raw HDA initialization verbs sent to /dev/snd/hwC2D0 on boot. Automating this via a systemd unit restored crystal-clear speaker and headphone audio.
+
+## 3. The Agentic Engineering Workspace
+
+With hardware stabilized, setting up an AI-first development environment was effortless:
+
+- **GitHub & Identity**: Seamless SSH key negotiation and token provisioning via the gh CLI.
+- **Universal Multi-Language Tooling**: Native Node.js 22, Go compiler, Python 3 with pipx, and ctags symbol indexing.
+- **Agent Codebase Graphing**: Integrating Repomix to generate structured architecture maps so AI pair programmers navigate complex multi-repo topologies in milliseconds.
+
+## The Verdict
+
+Going 100% Linux without a fallback is intimidating for the first two hours. But once the hardware is dialed in and the toolchain is automated, the speed, transparency, and developer ergonomics make returning to Windows unthinkable.
+    `,
+  },
+  {
     slug: 'building-multi-agent-ai-pipelines',
     title: 'Architecting Multi-Agent AI Pipelines with Go, Vue 3, and Python',
     excerpt:
