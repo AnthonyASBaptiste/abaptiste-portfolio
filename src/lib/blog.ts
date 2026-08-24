@@ -10,6 +10,192 @@ export interface BlogPost {
 
 export const samplePosts: BlogPost[] = [
   {
+    slug: 'spawning-the-claw-deck-hortense-nemoclaw',
+    title: 'Spawning The Claw Deck: Running Autonomous AI Agents on Fedora Linux',
+    excerpt:
+      'Building a multi-agent headquarters on Linux. Setting up our first sandbox agent Hortense with Hermes and MiniMax M3 via NVIDIA NIM, debugging Docker permissions and OpenShell gateway version drift, and creating The Claw Deck command center in Discord.',
+    date: '2026-08-25',
+    readTime: '7 min read',
+    tags: ['AI Agents', 'NemoClaw', 'OpenShell', 'Discord', 'DevOps', 'Fedora'],
+    content: `
+# Spawning The Claw Deck: Running Autonomous AI Agents on Fedora Linux
+
+One of the primary reasons I walked away from Windows was developer friction. Running background AI agent daemons, custom CLI bridges, and long-running Docker containers on Windows was an endless battle against sleep timers, socket mapping bugs, and memory bloat.
+
+On Fedora Linux, the goal was simple: turn this Razer Blade 14 into an autonomous mission control where multiple AI agents can live, execute code in secure sandboxes, and collaborate in real-time.
+
+Welcome to **The Claw Deck**.
+
+---
+
+## 1. The Architecture: NemoClaw, OpenShell & Hermes
+
+Instead of letting an agent run wild with raw, unrestricted terminal access on the host system, we use **NemoClaw** and **NVIDIA OpenShell**.
+
+This architecture isolates each agent in its own lightweight container with granular egress firewall policies:
+- **Sandbox Isolation**: The agent gets its own virtual filesystem, package managers, and environment.
+- **Network Presets**: Egress traffic is strictly controlled through policy presets (e.g. \`github\`, \`npm\`, \`pypi\`, \`public-reference\`, and \`discord\`), preventing unauthorized network calls or accidental data exfiltration.
+- **Inference Engine**: We chose **MiniMax M3** hosted on **NVIDIA NIM** for Hortense. MiniMax M3 gives us long-context retention and strong tool-calling reliability inside the Hermes agent runtime.
+
+---
+
+## 2. Real-World Onboarding Hurdles (And How We Fixed Them)
+
+Setting up bleeding-edge multi-agent infrastructure on a fresh Linux install rarely happens in a single click. Here were the two critical hurdles we hit and resolved:
+
+### Hurdle 1: The Non-Root Docker Socket Permission Trap
+When NemoClaw started provisioning the container sandbox for Hortense, the onboarding wizard abruptly crashed with an unhelpful gRPC HTTP/2 stream reset:
+\`\`\`text
+tonic::transport::Error(Transport, hyper::Error(Http2, Reset(StreamId(3), PROTOCOL_ERROR)))
+\`\`\`
+Digging into the daemon logs revealed the root cause: Docker was running, but our user account hadn't been added to the \`docker\` group. OpenShell was getting an immediate \`permission denied /var/run/docker.sock\` and dropping the gRPC pipe.
+
+**The Fix**:
+\`\`\`bash
+sudo usermod -aG docker $USER
+sudo systemctl restart docker
+newgrp docker
+\`\`\`
+
+### Hurdle 2: The Gateway Version Drift Conflict
+After resolving Docker permissions, running \`nemoclaw onboard --resume\` hit a version mismatch error:
+\`\`\`text
+Refusing the system OpenShell gateway service: /usr/bin/openshell-gateway is 0.0.111, 
+outside the maximum 0.0.101 supported by this NemoClaw release.
+\`\`\`
+A system-level RPM package had installed a newer build of \`openshell-gateway\` (0.0.111) in \`/usr/bin/\`, while NemoClaw expected its pinned 0.0.101 binary in \`~/.local/bin/\`.
+
+**The Fix**: Removing the system-level RPM allowed NemoClaw to use its bundled, compatible binaries cleanly:
+\`\`\`bash
+sudo dnf remove openshell openshell-gateway -y
+systemctl --user restart nemoclaw-openshell-gateway.service
+nemoclaw onboard --resume
+\`\`\`
+
+---
+
+## 3. The Claw Deck: Centralized Discord Mission Control
+
+With the sandbox and inference route active, we connected Hortense to Discord.
+
+Instead of managing separate CLI windows for every agent, we created a private Discord server called **The Claw Deck**.
+
+### Why Discord is the Ideal Agent HQ:
+- **Dedicated Channels per Agent**: \`#hortense\` for general coding and analysis, \`#gwen\` for research navigation, and \`#war-room\` for multi-agent collaboration.
+- **Syntax Highlighting & Threads**: Native code blocks in Go, Python, and TypeScript, with isolated task threads that keep channels clean.
+- **Mobile Access**: Ability to assign tasks, check status, or trigger workflows from a phone on the go.
+- **Team Identity**: We even designed a custom server emblem—5 cybernetic mechanical lobster claws meeting in a team huddle with glowing NVIDIA green circuitry.
+
+---
+
+## 4. What's Next for the Fleet
+
+Hortense is officially online, listening on Discord, and executing tasks inside her OpenShell sandbox.
+
+Next up on The Claw Deck:
+1. Spawning **Gwen**, our dedicated web navigation and research agent.
+2. Building an automated **CodeAudit** reviewer that hooks directly into GitHub pull requests.
+3. Enabling local GPU inference using our laptop's RTX 4070 for zero-latency, offline tasks.
+
+Linux has transformed this machine from a simple laptop into an autonomous AI workshop.
+    `,
+  },
+  {
+    slug: 'tamriel-on-fedora-eso-linux-journey',
+    title: 'Tamriel on Fedora: Conquering the 100GB Linux Gaming Hurdle',
+    excerpt:
+      'The ultimate test of wiping Windows was whether my favorite MMO—The Elder Scrolls Online—would actually run. From 2023 installer timeouts and host_ieversionfail registry traps to unlocking a 240Hz screen: here is how we got ESO running at full speed on Fedora 44 with an RTX 4070.',
+    date: '2026-08-24',
+    readTime: '6 min read',
+    tags: ['Linux', 'Gaming', 'Fedora', 'Wayland', 'NVIDIA', 'Proton'],
+    content: `
+# Tamriel on Fedora: Conquering the 100GB Linux Gaming Hurdle
+
+When I decided to go cold turkey and wipe Windows on my primary Razer Blade 14 (AMD Ryzen + NVIDIA GeForce RTX 4070), I made a promise to myself: **this laptop still had to be my gaming rig**.
+
+The true test wasn't compiling Go code or running Docker containers. The ultimate test was **The Elder Scrolls Online (ESO)**—a massive ~100GB MMO with a notoriously quirky launcher, anti-cheat hooks, and complex graphics pipelines.
+
+Here is the exact technical journey of how we overcame every installer trap, fixed Wayland display flickering, and got ESO running at a silky-smooth 240 FPS on Fedora Linux 44.
+
+---
+
+## 1. The Epic Games & Installer Stub Trap
+
+I own ESO on the Epic Games Store and used **Heroic Games Launcher** to install it. 
+
+When you install ESO from Epic Games, it doesn't download the game files—it only downloads a small 80MB stub (\`zosEGSStarter.exe\` and an installer \`setup.exe\`). When you click Play, the starter executable attempts to run \`setup.exe\` to unpack the Bethesda launcher.
+
+Under Proton/Wine, this immediately broke:
+\`\`\`text
+The patcher isn't installed! Installing the patcher...
+Patcher Installer path: ...\\TheElderScrollsOnline\\setup.exe
+ERROR: Patcher installation failed! Exiting...
+\`\`\`
+
+### The "Timeout Waiting for Window to Load" Error
+When we manually triggered \`setup.exe\` inside the Wine prefix via Heroic's *Run EXE on Prefix* tool, the installer timed out after 30 seconds:
+\`\`\`text
+ERROR - Timeout waiting for window to load
+\`\`\`
+The \`setup.exe\` packaged by Epic is a legacy build from 2023. Its embedded web browser component tries to contact retired Zenimax CDN endpoints that no longer respond.
+
+### The "host_ieversionfail" Registry Trap
+Next, we downloaded the standalone \`Install_ESO.exe\` directly from Zenimax. Running it threw a new error: \`host_ieversionfail\`.
+Under the hood, Zenimax's installer checks the Windows Registry for the installed Internet Explorer version. Wine emulates IE by default and reported version \`9.11.9600.18376\`. The installer parsed the leading \`9\`, assumed IE9 (< IE11), and refused to start.
+
+### The Solution: Direct CDN Extraction
+Rather than fighting legacy installer wrappers, we discovered Zenimax hosts the official, standalone unbundled launcher archive:
+1. We downloaded \`Launcher_6.2.44.zip\` directly from Zenimax's CDN.
+2. Extracted the full \`Launcher/\` directory directly into \`~/Games/Heroic/TheElderScrollsOnline/Launcher/\` and the Wine prefix.
+3. When clicking Play in Heroic, \`zosEGSStarter.exe\` immediately detected the up-to-date Chromium/CEF launcher, authenticated our Epic Games account, and began downloading the full 100GB game!
+
+---
+
+## 2. Fixing Wayland Flickering & Pacing
+
+Once the game installed and launched, we hit our next hurdle: intense screen flickering and brightness strobing.
+
+On modern Linux desktops running **KDE Plasma on Wayland with NVIDIA drivers**, this happens for two reasons:
+1. **Exclusive Fullscreen**: ESO defaulted to \`FULLSCREEN 1\` (Exclusive Fullscreen), which conflicts with Wayland's compositor page-flipping.
+2. **HDR & DLSS Strobing**: Without explicit sync and NVAPI configured, uninitialized HDR metadata causes brightness pulsing.
+
+**The Fix in \`UserSettings.txt\`**:
+We modified the game configuration file located in the prefix's \`Documents/Elder Scrolls Online/live/UserSettings.txt\`:
+\`\`\`ini
+SET FULLSCREEN "2"            # Borderless Windowed Mode (Native Wayland smoothness)
+SET PreferMaximizedWindow "1"
+SET HDR_ENABLED "0"           # Disables HDR strobing
+\`\`\`
+Instantly, all flickering vanished, and the game rendered crisp and tear-free.
+
+---
+
+## 3. Unlocking the 240Hz Display Cap
+
+The Razer Blade 14 features a gorgeous 2560x1600 @ 240Hz display. However, initial gameplay felt slightly choppy despite high frame rates.
+
+A deep dive into \`UserSettings.txt\` revealed why: ESO has a hardcoded engine frame-rate limiter set to 100 FPS by default:
+\`\`\`ini
+SET MinFrameTime.2 "0.01000000"  # 1 / 100 = 100 FPS cap
+\`\`\`
+Displaying 100 FPS on a 240Hz screen creates uneven frame pacing (micro-judder). 
+
+We unlocked the engine up to our monitor's native 240Hz:
+\`\`\`ini
+SET MinFrameTime.2 "0.00416667"  # 1 / 240 = 240 FPS
+\`\`\`
+Paired with **Feral GameMode** (\`gamemode\`) and our **Amazon Luna Wireless Controller** connected over Bluetooth (which Linux mapped automatically as a low-latency XInput gamepad), the experience became butter-smooth.
+
+---
+
+## The Verdict
+
+Standing in Tamriel on a fresh Fedora installation with 240 FPS, zero screen tearing, responsive controller input, and rich audio is a defining moment for this migration.
+
+Linux gaming in 2026 isn't a compromise—with the right understanding of Proton, prefixes, and display servers, it's an incredible platform.
+    `,
+  },
+  {
     slug: 'cold-turkey-windows-to-linux',
     title: 'Going Cold Turkey: Why I Finally Wiped Windows on My Main Machine',
     excerpt:
