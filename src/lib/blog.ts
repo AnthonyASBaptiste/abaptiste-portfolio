@@ -10,6 +10,213 @@ export interface BlogPost {
 
 export const samplePosts: BlogPost[] = [
   {
+    slug: 'fleet-deployment-pitfalls-nemoclaw-multi-agent-linux',
+    title: 'Hardening the Fleet: The Battle-Tested Pitfalls & Gotchas of Multi-Agent Linux Sandboxes',
+    excerpt:
+      'Taking The Claw Deck from a single test container to a full 3-agent autonomous fleet (Hortense, Gwen, and Makeda) with Discord, Tailscale MagicDNS HTTPS, and live read-write Obsidian/Google Drive sync. Here are the 8 real-world pitfalls, proxy drops, POSIX ACL collisions, and Docker gotchas you only discover in the trenches.',
+    date: '2026-08-25',
+    readTime: '9 min read',
+    tags: ['AI Agents', 'NemoClaw', 'Docker', 'Tailscale', 'Discord', 'Linux', 'Security'],
+    content: `
+# Hardening the Fleet: The Battle-Tested Pitfalls & Gotchas of Multi-Agent Linux Sandboxes
+
+Spawning a single "Hello World" AI agent in a container is easy. Building a persistent, multi-agent autonomous engineering fleet that shares host knowledge bases, communicates over Discord, serves encrypted web UIs over Tailscale, and executes code in hardware-accelerated sandboxes without stepping on each other is a completely different beast.
+
+Over the last 48 hours, I transformed **The Claw Deck** from a proof-of-concept into a 3-agent production roster on Fedora Linux:
+- **Hortense 🦞** (*Hermes* + Nemotron 3 Super 120B): System Architecture, Knowledge Graph, and Obsidian Vault master.
+- **Gwen 🧭** (*OpenClaw* + MiniMax M3): Web Intelligence, Deep Research, and Live Internet Scout.
+- **Makeda 👑** (*Hermes Developer* + Nemotron 3 Super): Code Sentinel, Security Auditor, and Repository Refactorer.
+
+Getting them all running smoothly, concurrently, and securely required navigating an obstacle course of undocumented quirks, Linux kernel sandboxing rules, and container networking gotchas. 
+
+Here are the **8 battle-tested pitfalls and gotchas** we hit—and how to fix every single one.
+
+---
+
+## 1. The OpenClaw Plugin Integrity & Registry Trap
+
+When building the custom OpenClaw container for **Gwen**, the build failed halfway through with a cryptic SHA-512 tarball integrity mismatch:
+\`\`\`text
+[stage-24 45/60] RUN --network=none ...
+verify_openclaw_plugin_integrity() failed for @openclaw/tavily
+\`\`\`
+
+### The Gotcha:
+OpenClaw 2026.7.1 bakes a deterministic, offline-verifiable archive of reviewed plugins into its base image. It bundles \`@openclaw/brave-plugin@2026.7.1\` by default. When the onboarding wizard prompted for a search provider and we selected Tavily, the build looked for a pre-cached Tavily tarball archive that didn't exist in the offline slice, triggering an immediate integrity abort.
+
+### The Fix:
+Stick to bundled first-party plugins (like **Brave Search** or **None**) during base image assembly, and handle third-party egress providers through the host OpenShell gateway proxy rather than modifying the core container build.
+
+---
+
+## 2. The Silent Proxy Drop: Why Discord Bots Return 403 Forbidden
+
+With Gwen and Hortense onboarded with valid Discord bot tokens and Server IDs, their internal logs started throwing:
+\`\`\`text
+aiohttp.client_exceptions.ClientHttpProxyError: 403 Forbidden
+Cannot connect to host discord.com:443 ssl:default [Forbidden]
+\`\`\`
+
+### The Gotcha:
+NemoClaw sandboxes run behind a local Layer-7 Open Policy Agent (OPA) supervisor proxy (\`10.200.0.1:3128\`). By default, **all outbound network egress is denied**. Registering a Discord bot token in the agent's environment configuration does *not* automatically modify the active firewall policy. The container's HTTP calls to \`gateway.discord.gg:443\` and \`discord.com:443\` were hitting the OPA boundary and getting rejected with HTTP 403.
+
+### The Fix:
+You must explicitly compile and apply the \`discord\` network policy preset to the sandbox:
+\`\`\`bash
+nemoclaw hortense policy add discord --yes
+nemoclaw gwen policy add discord --yes
+nemoclaw makeda policy add discord --yes
+\`\`\`
+This opens precise REST and WebSocket routes for Discord without exposing the rest of your local network.
+
+---
+
+## 3. The "Ghost Eyes" Reaction: Discord Mention Mode
+
+Once Gwen connected to Discord, typing a message in \`#gwen\` caused her to react with the 👀 emoji—but she never generated a response.
+
+The gateway logs revealed the secret:
+\`\`\`json
+{"module": "discord-auto-reply", "channelId": "1541279344406695956", "reason": "no-mention", "message": "discord: skipping guild message"}
+\`\`\`
+
+### The Gotcha:
+By default, OpenClaw enforces \`DISCORD_REQUIRE_MENTION=1\` in shared servers to prevent spam. The bot acknowledges incoming messages with 👀, but deliberately skips LLM inference unless it is explicitly tagged with a literal Discord mention (\`<@BOT_ID>\`). If you simply type *"Hey Gwen"* without clicking the blue autocomplete tag, the event is dropped.
+
+### The Fix:
+Either explicitly tag \`@Gwen\` in the channel, or set \`DISCORD_REQUIRE_MENTION=0\` in the channel plan for dedicated private rooms.
+
+---
+
+## 4. The Double Mode Flag Crash: \`:rw:ro\`
+
+To allow Hortense and Makeda to edit notes and code, we passed \`:rw\` in the \`--host-mount\` flag:
+\`\`\`bash
+--host-mount "/home/anthony/Documents/Obsidian Vault:/sandbox/vault:rw"
+\`\`\`
+
+The container creation crashed instantly:
+\`\`\`text
+Docker responded with status code 500: invalid volume specification: 
+'/home/anthony/Documents/Obsidian Vault:/sandbox/vault:rw:ro'
+\`\`\`
+
+### The Gotcha:
+NemoClaw's CLI parser expects \`--host-mount <HOST_PATH>:<CONTAINER_PATH>\`. Internally, NemoClaw's safety model automatically appends its own \`:ro\` flag. Passing \`:rw\` at the end meant Docker received two conflicting volume mode arguments (\`:rw:ro\`), creating invalid Docker syntax.
+
+### The Fix:
+Always pass clean container paths without trailing mode flags:
+\`\`\`bash
+--host-mount "/home/anthony/Documents/Obsidian Vault:/sandbox/vault" \
+--host-mount "/home/anthony/Projects:/sandbox/projects"
+\`\`\`
+
+---
+
+## 5. The Host-Mount Permissions Barrier: Landlock & POSIX ACLs
+
+Even after remounting the container volumes as read-write, the agents ran into a classic Linux permissions wall:
+\`\`\`text
+touch: cannot touch '/sandbox/vault/test.md': Permission denied
+\`\`\`
+
+### The Gotcha:
+NemoClaw containers run as an unprivileged, non-root user named \`sandbox\` (UID \`998\`, GID \`999\`). The host user on Fedora is \`anthony\` (UID \`1000\`, GID \`1000\`). Because host directories like \`~/Documents/Obsidian Vault\` and \`~/Projects\` had standard \`755\` (\`rwxr-xr-x\`) permissions, UID 998 fell into the "others" group—giving the agents full read access, but blocking writes.
+
+### The Fix: Recursive POSIX ACLs
+Instead of insecurely \`chmod 777\`-ing your entire home directory, use Linux POSIX Access Control Lists (ACLs) to grant UID \`998\` recursive read-write-execute permissions with automatic inheritance for newly created files:
+
+\`\`\`bash
+# Grant and inherit read/write/execute for the in-sandbox user (UID 998):
+setfacl -R -m u:998:rwx "/home/anthony/Documents/Obsidian Vault"
+setfacl -R -d -m u:998:rwx "/home/anthony/Documents/Obsidian Vault"
+
+setfacl -R -m u:998:rwx "/home/anthony/Projects"
+setfacl -R -d -m u:998:rwx "/home/anthony/Projects"
+
+setfacl -R -m u:998:rwx "/home/anthony/GoogleDrive"
+setfacl -R -d -m u:998:rwx "/home/anthony/GoogleDrive"
+\`\`\`
+
+Instantly, all three agents were able to create, edit, update, and manage files directly in the vault and project repos.
+
+---
+
+## 6. The Multi-Hermes API Port Collision (\`8642\` vs \`8643\`)
+
+When spinning up our second Hermes agent (**Makeda**), onboarding crashed at Step 6:
+\`\`\`text
+Error: listen EADDRINUSE: address already in use 127.0.0.1:8642
+\`\`\`
+
+### The Gotcha:
+Hermes uses an internal OpenAI-compatible API relay on port \`8642\` by default. When Hortense was started, OpenShell bound host port \`8642\` to Hortense's container. When Makeda tried to spin up, NemoClaw attempted to allocate \`8642\` again and crashed.
+
+### The Fix:
+Pass \`NEMOCLAW_HERMES_API_PORT\` to allocate unique internal API ports for concurrent Hermes agents:
+\`\`\`bash
+# Hortense uses default :8642 (Control UI :8481)
+# Makeda uses isolated :8643 (Control UI :8483)
+NEMOCLAW_HERMES_API_PORT=8643 nemoclaw onboard \
+  --name makeda \
+  --agent hermes \
+  --control-ui-port 8483 \
+  --sandbox-gpu \
+  --host-mount "/home/anthony/Documents/Obsidian Vault:/sandbox/vault" \
+  --host-mount "/home/anthony/Projects:/sandbox/projects" \
+  --fresh
+\`\`\`
+
+---
+
+## 7. Understanding Harness Types: Terminal TUI vs. Persistent Daemon
+
+We originally evaluated **LangChain DeepAgents Code (\`dcode\`)** for Makeda. While \`dcode\` is an incredible coding engine, we discovered it had no Discord option during onboarding.
+
+### The Gotcha:
+Not all AI agent engines are background chat daemons:
+* **Hermes & OpenClaw**: Long-running background daemons with WebSocket gateways, web dashboards, and native chat bridge adapters (Discord, Telegram, Slack).
+* **DeepAgents Code (\`dcode\`)**: A dedicated **Terminal TUI / CLI harness** (like Claude Code or Cursor CLI in the terminal), built for interactive shell sessions (\`nemo-deepagents launch\`) rather than asynchronous background messaging.
+
+### The Fix:
+To make Makeda accessible from our phones on Discord, we onboarded her under the **Hermes Developer Profile** with code analysis, Git tools, and repo inspection enabled.
+
+---
+
+## 8. Encrypted Mobile Access via Tailscale Serve & MagicDNS
+
+The final goal was being able to monitor and control the fleet from an iPhone or MacBook anywhere in the world without exposing unauthenticated raw ports to the public internet.
+
+### The Solution:
+Instead of setting up reverse proxies, port forwarding on home routers, or paying for static IPs, we used **Tailscale Serve** on Fedora:
+
+\`\`\`bash
+# 1. Grant user permission to manage Tailscale Serve:
+sudo tailscale set --operator=$USER
+
+# 2. Expose the agent web dashboards over Tailscale HTTPS with automatic Let's Encrypt certificates:
+tailscale serve --bg --https=8481 http://127.0.0.1:8481
+tailscale serve --bg --https=8482 http://127.0.0.1:8482
+tailscale serve --bg --https=8483 http://127.0.0.1:8483
+\`\`\`
+
+Now, any device on our private Tailnet can open:
+* **Hortense (Architecture)**: \`https://itony-razer.taila176a1.ts.net:8481\`
+* **Gwen (Research)**: \`https://itony-razer.taila176a1.ts.net:8482\`
+* **Makeda (Code Audit)**: \`https://itony-razer.taila176a1.ts.net:8483\`
+
+Zero open firewall ports, genuine TLS certificates with zero browser warnings, and fully end-to-end encrypted.
+
+---
+
+## The Verdict: A True Command Deck
+
+Building a resilient multi-agent workspace isn't just about writing prompts—it's about systems engineering, container isolation, kernel security boundaries, and network topology.
+
+With Hortense, Gwen, and Makeda now live in their respective Discord channels and synced to Obsidian and Google Drive, **The Claw Deck** is fully operational.
+    `,
+  },
+  {
     slug: 'spawning-the-claw-deck-hortense-nemoclaw',
     title: 'Spawning The Claw Deck: Running Autonomous AI Agents on Fedora Linux',
     excerpt:
