@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { fetchAllPosts } from '@/lib/blog';
+import { fetchAllPosts, formatDate } from '@/lib/blog';
 import { Metadata } from 'next';
 import { ArrowLeft, Clock } from 'lucide-react';
 
@@ -48,7 +48,7 @@ export default async function BlogIndex() {
               <div className="flex items-center justify-between gap-4 font-mono-code text-xs text-slate-500 mb-3">
                 <span className="text-[#00f0ff]">ARTICLE_0{idx + 1} {'//'}</span>
                 <div className="flex items-center gap-3">
-                  <span>{post.date}</span>
+                  <span>{formatDate(post.date)}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3 text-[#f59e0b]" /> {post.readTime}

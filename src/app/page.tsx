@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { PersonJsonLd } from '@/components/JsonLd';
 import Navbar from '@/components/Navbar';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, formatDate } from '@/lib/blog';
 import { 
   Terminal, 
   ExternalLink, 
@@ -513,7 +513,7 @@ export default function Home() {
                   href={`/blog/${post.slug}`}
                   className="p-5 bg-[#0e131f]/40 border border-[#1e293b] rounded-xl hover:border-[#00f0ff]/40 transition-all block group"
                 >
-                  <span className="text-[11px] font-mono-code text-slate-500 block mb-2">{post.date}</span>
+                  <span className="text-[11px] font-mono-code text-slate-500 block mb-2">{formatDate(post.date)}</span>
                   <h4 className="text-sm font-display font-bold text-white mb-2 group-hover:text-[#00f0ff] transition-colors leading-snug">
                     {post.title}
                   </h4>

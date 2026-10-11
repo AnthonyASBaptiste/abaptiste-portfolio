@@ -569,3 +569,8 @@ export async function fetchPostBySlug(slug: string): Promise<BlogPost | undefine
   return getPostBySlug(slug);
 }
 
+export function formatDate(dateString: string): string {
+  if (!dateString) return '';
+  return dateString.includes('T') ? dateString.split('T')[0] : dateString;
+}
+

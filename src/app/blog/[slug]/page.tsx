@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { fetchPostBySlug } from '@/lib/blog';
+import { fetchPostBySlug, formatDate } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
+import { MarkdownArticle } from '@/components/MarkdownArticle';
 
 export async function generateMetadata({
   params,
@@ -48,7 +49,7 @@ export default async function BlogPostPage({
         <header className="border-b border-[#1e293b] pb-8 space-y-4">
           <div className="flex items-center gap-4 text-xs font-mono-code text-slate-400">
             <span className="flex items-center gap-1 text-[#00f0ff]">
-              <Calendar className="w-3.5 h-3.5" /> {post.date}
+              <Calendar className="w-3.5 h-3.5" /> {formatDate(post.date)}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1 text-[#f59e0b]">
@@ -73,34 +74,7 @@ export default async function BlogPostPage({
         </header>
 
         {/* Article Body */}
-        <div className="space-y-6 text-slate-300 font-sans text-base leading-relaxed">
-          {post.content.split('\n\n').map((paragraph, idx) => {
-            if (paragraph.startsWith('# ')) {
-              return (
-                <h1 key={idx} className="text-2xl font-display font-bold text-white mt-8 mb-4 pt-4 border-t border-[#1e293b]">
-                  {paragraph.replace('# ', '')}
-                </h1>
-              );
-            }
-            if (paragraph.startsWith('## ')) {
-              return (
-                <h2 key={idx} className="text-xl font-display font-bold text-[#00f0ff] mt-6 mb-3">
-                  {paragraph.replace('## ', '')}
-                </h2>
-              );
-            }
-            if (paragraph.startsWith('- ')) {
-              return (
-                <ul key={idx} className="space-y-2 font-mono-code text-xs text-slate-300 pl-4 border-l-2 border-[#00f0ff]">
-                  {paragraph.split('\n').map((li, liIdx) => (
-                    <li key={liIdx}>{li.replace('- ', '▸ ')}</li>
-                  ))}
-                </ul>
-              );
-            }
-            return <p key={idx}>{paragraph}</p>;
-          })}
-        </div>
+        <MarkdownArticle content={post.content} />
 
         {/* Article Footer */}
         <footer className="mt-16 pt-8 border-t border-[#1e293b] flex items-center justify-between text-xs font-mono-code text-slate-500">
