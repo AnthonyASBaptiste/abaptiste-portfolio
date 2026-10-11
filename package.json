@@ -1,12 +1,13 @@
 {
   "name": "portfolio-2026",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "sanity:migrate": "node scripts/migrate-posts.mjs",
     "release": "standard-version",
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
@@ -15,9 +16,11 @@
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
+    "@sanity/image-url": "^2.1.1",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.26.0",
     "next": "16.2.11",
+    "next-sanity": "^13.3.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -28,8 +31,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "standard-version": "^9.5.0"
+    "typescript": "^5"
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/blog';
+import { fetchAllPosts } from '@/lib/blog';
 import { Metadata } from 'next';
-import { Terminal, ArrowLeft, Tag, Clock } from 'lucide-react';
+import { ArrowLeft, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Engineering & Architecture Notes | Anthony Baptiste',
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
     'Machine-readable technical notes on AI Multi-Agent Systems, Go Proxy Runtimes, and GCP Cloud Data Engineering.',
 };
 
-export default function BlogIndex() {
-  const posts = getAllPosts();
+export default async function BlogIndex() {
+  const posts = await fetchAllPosts();
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 font-sans bg-blueprint-grid selection:bg-[#00f0ff] selection:text-slate-950">
@@ -46,7 +46,7 @@ export default function BlogIndex() {
               className="p-6 bg-[#0e131f] border border-[#1e293b] rounded-2xl hover:border-[#00f0ff]/50 transition-all duration-300 group"
             >
               <div className="flex items-center justify-between gap-4 font-mono-code text-xs text-slate-500 mb-3">
-                <span className="text-[#00f0ff]">ARTICLE_0{idx + 1} //</span>
+                <span className="text-[#00f0ff]">ARTICLE_0{idx + 1} {'//'}</span>
                 <div className="flex items-center gap-3">
                   <span>{post.date}</span>
                   <span>•</span>

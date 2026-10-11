@@ -506,3 +506,66 @@ export function getAllPosts(): BlogPost[] {
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return samplePosts.find((p) => p.slug === slug);
 }
+
+export async function fetchAllPosts(): Promise<BlogPost[]> {
+  try {
+    const { client, isSanityConfigured } = await import('./sanity.client');
+    if (isSanityConfigured && client) {
+      const sanityPosts = await client.fetch<BlogPost[]>(
+        `*[_type == "post"] | order(publishedAt desc) {
+          "slug": slug.current,
+          title,
+          excerpt,
+          "date": publishedAt,
+          readTime,
+          tags,
+          content
+        }`,
+        {},
+        {
+          next: {
+            tags: ['post'],
+            revalidate: 60,
+          },
+        }
+      );
+      if (sanityPosts && sanityPosts.length > 0) {
+        return sanityPosts;
+      }
+    }
+  } catch (err) {
+    console.warn('Sanity fetch failed or unconfigured, falling back to local posts:', err);
+  }
+  return getAllPosts();
+}
+
+export async function fetchPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  try {
+    const { client, isSanityConfigured } = await import('./sanity.client');
+    if (isSanityConfigured && client) {
+      const post = await client.fetch<BlogPost | null>(
+        `*[_type == "post" && slug.current == $slug][0] {
+          "slug": slug.current,
+          title,
+          excerpt,
+          "date": publishedAt,
+          readTime,
+          tags,
+          content
+        }`,
+        { slug },
+        {
+          next: {
+            tags: ['post'],
+            revalidate: 60,
+          },
+        }
+      );
+      if (post) return post;
+    }
+  } catch (err) {
+    console.warn(`Sanity fetch for slug ${slug} failed, falling back to local:`, err);
+  }
+  return getPostBySlug(slug);
+}
+

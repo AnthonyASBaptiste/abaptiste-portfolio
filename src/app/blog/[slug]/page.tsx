@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { getPostBySlug } from '@/lib/blog';
+import { fetchPostBySlug } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { ArrowLeft, Clock, Calendar, Tag, Terminal } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 
 export async function generateMetadata({
   params,
@@ -11,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await fetchPostBySlug(slug);
   if (!post) return {};
 
   return {
@@ -26,7 +26,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await fetchPostBySlug(slug);
 
   if (!post) {
     notFound();

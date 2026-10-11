@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { ArrowLeft, ExternalLink, Cpu, ShieldCheck, Activity, Layers, CheckCircle2, AlertTriangle, XCircle, Terminal } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Cpu, Activity, Layers, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Research Navigator Case Study | Anthony Baptiste',
