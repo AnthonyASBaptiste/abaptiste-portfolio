@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { PersonJsonLd } from '@/components/JsonLd';
 import Navbar from '@/components/Navbar';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, formatDate } from '@/lib/blog';
 import { 
   Terminal, 
   ExternalLink, 
@@ -208,14 +208,14 @@ export default function Home() {
             <div className="mt-6 pt-6 border-t border-[#1e293b] flex flex-col gap-3">
               <Link
                 href="/cv"
-                className="w-full py-3.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-center text-sm hover:bg-cyan-300 transition-all shadow-lg shadow-[#00f0ff]/20 flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-center text-sm hover:bg-cyan-300 transition-all shadow-lg shadow-[#00f0ff]/20 flex items-center justify-center gap-2 active:scale-[0.98]"
               >
                 <FileText className="w-4 h-4" /> VIEW COMPLETE CV / RESUME →
               </Link>
               <a
                 href="/Anthony_Baptiste_CV.pdf"
                 download="Anthony_Baptiste_CV_SeniorSoftwareEngineer.pdf"
-                className="w-full py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
               >
                 <Download className="w-3.5 h-3.5 text-[#00f0ff]" /> DOWNLOAD CV (PDF)
               </a>
@@ -224,7 +224,7 @@ export default function Home() {
                   href="https://github.com/AnthonyASBaptiste"
                   target="_blank"
                   rel="noreferrer"
-                  className="py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
+                  className="py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   <Github className="w-3.5 h-3.5 text-[#00f0ff]" /> GITHUB
                 </a>
@@ -232,7 +232,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/anthonybaptiste/"
                   target="_blank"
                   rel="noreferrer"
-                  className="py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2"
+                  className="py-2.5 rounded-xl bg-[#07090e] border border-[#1e293b] text-slate-300 font-mono-code text-xs text-center hover:border-[#00f0ff]/50 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   <Linkedin className="w-3.5 h-3.5 text-[#00f0ff]" /> LINKEDIN
                 </a>
@@ -513,7 +513,7 @@ export default function Home() {
                   href={`/blog/${post.slug}`}
                   className="p-5 bg-[#0e131f]/40 border border-[#1e293b] rounded-xl hover:border-[#00f0ff]/40 transition-all block group"
                 >
-                  <span className="text-[11px] font-mono-code text-slate-500 block mb-2">{post.date}</span>
+                  <span className="text-[11px] font-mono-code text-slate-500 block mb-2">{formatDate(post.date)}</span>
                   <h4 className="text-sm font-display font-bold text-white mb-2 group-hover:text-[#00f0ff] transition-colors leading-snug">
                     {post.title}
                   </h4>

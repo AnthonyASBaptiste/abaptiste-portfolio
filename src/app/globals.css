@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
   --bg-obsidian: #07090e;
   --bg-slate-panel: #0e131f;
   --border-blueprint: #1e293b;
@@ -11,11 +12,25 @@
   --text-muted: #94a3b8;
 }
 
+::selection {
+  background-color: var(--signal-cyan);
+  color: #020617;
+}
+
 body {
   background-color: var(--bg-obsidian);
   color: var(--text-main);
   font-family: var(--font-inter), system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* Accessible Theme-Consistent Focus States */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--signal-cyan);
+  outline-offset: 2px;
 }
 
 .font-display {
@@ -24,6 +39,16 @@ body {
 
 .font-mono-code {
   font-family: var(--font-jetbrains-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Editorial Typographic Balance */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* Blueprint Grid Pattern */
