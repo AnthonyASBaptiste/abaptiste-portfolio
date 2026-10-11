@@ -5,6 +5,26 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Automatically load .env.local and .env into process.env
+for (const envFileName of ['.env.local', '.env']) {
+  const envPath = path.join(__dirname, '..', envFileName);
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf8').split('\n');
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const idx = trimmed.indexOf('=');
+      if (idx !== -1) {
+        const key = trimmed.slice(0, idx).trim();
+        const val = trimmed.slice(idx + 1).trim().replace(/^['"]|['"]$/g, '');
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+}
+
 // Import the posts from blog.ts
 // For ease of execution across node versions, we parse/read the sample posts
 const blogFilePath = path.join(__dirname, '../src/lib/blog.ts');
@@ -20,7 +40,6 @@ if (!postsMatch) {
 
 // Convert typescript array string to evaluated JS array
 const rawPostsString = postsMatch[1];
-// eslint-disable-next-line no-eval
 const posts = eval(rawPostsString);
 
 console.log(`Found ${posts.length} posts to migrate.`);
