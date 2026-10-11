@@ -5,16 +5,11 @@ import {
   ArrowLeft, 
   ExternalLink, 
   Cpu, 
-  ShieldCheck, 
   Activity, 
   Layers, 
   CheckCircle2, 
   AlertTriangle, 
-  XCircle, 
-  Terminal, 
-  Database,
-  Mail,
-  FileText
+  XCircle 
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -155,7 +150,7 @@ export default function HeraldCaseStudy() {
                 <XCircle className="w-4 h-4" /> VALIDATION ERROR
               </div>
               <p className="text-slate-300 font-sans text-xs">
-                AI extracts target Sunday date that mismatch next Sunday criteria. File is locked under the "failed_validation" status for audit log review.
+                AI extracts target Sunday date that mismatch next Sunday criteria. File is locked under the &quot;failed_validation&quot; status for audit log review.
               </p>
             </div>
 
@@ -164,7 +159,7 @@ export default function HeraldCaseStudy() {
                 <AlertTriangle className="w-4 h-4" /> MANUAL DRAFT REVIEW
               </div>
               <p className="text-slate-300 font-sans text-xs">
-                Admin overrides metadata errors using the correction modal, choosing to either "Schedule Email Delivery" or mark as "Archive Only".
+                Admin overrides metadata errors using the correction modal, choosing to either &quot;Schedule Email Delivery&quot; or mark as &quot;Archive Only&quot;.
               </p>
             </div>
 
