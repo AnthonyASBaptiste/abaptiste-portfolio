@@ -69,7 +69,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/cv"
-            className="px-3.5 py-1.5 rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-xs hover:bg-cyan-300 transition-all shadow-md shadow-[#00f0ff]/20 flex items-center gap-1.5"
+            className="px-3.5 py-2 min-h-[36px] rounded-xl bg-[#00f0ff] text-slate-950 font-display font-bold text-xs hover:bg-cyan-300 transition-all shadow-md shadow-[#00f0ff]/20 flex items-center gap-1.5 active:scale-95"
           >
             <FileText className="w-3.5 h-3.5" /> VIEW CV
           </Link>
@@ -78,19 +78,21 @@ export default function Navbar() {
               href="https://github.com/AnthonyASBaptiste"
               target="_blank"
               rel="noreferrer"
-              className="p-1.5 rounded-lg bg-[#0e131f] border border-[#1e293b] text-slate-400 hover:text-white hover:border-[#00f0ff]/50 transition-all"
+              className="min-w-[36px] min-h-[36px] p-2 rounded-lg bg-[#0e131f] border border-[#1e293b] text-slate-400 hover:text-white hover:border-[#00f0ff]/50 transition-all flex items-center justify-center active:scale-95"
               title="GitHub Profile"
+              aria-label="GitHub Profile"
             >
-              <Github className="w-3.5 h-3.5" />
+              <Github className="w-4 h-4" />
             </a>
             <a
               href="https://www.linkedin.com/in/anthonybaptiste/"
               target="_blank"
               rel="noreferrer"
-              className="p-1.5 rounded-lg bg-[#0e131f] border border-[#1e293b] text-slate-400 hover:text-white hover:border-[#00f0ff]/50 transition-all"
+              className="min-w-[36px] min-h-[36px] p-2 rounded-lg bg-[#0e131f] border border-[#1e293b] text-slate-400 hover:text-white hover:border-[#00f0ff]/50 transition-all flex items-center justify-center active:scale-95"
               title="LinkedIn Profile"
+              aria-label="LinkedIn Profile"
             >
-              <Linkedin className="w-3.5 h-3.5" />
+              <Linkedin className="w-4 h-4" />
             </a>
           </div>
         </div>
