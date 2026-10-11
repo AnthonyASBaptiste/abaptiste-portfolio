@@ -13,3 +13,10 @@
 ## 📖 Next.js 16 Rules
 
 This project uses Next.js 16 (Turbopack). Read `node_modules/next/dist/docs/` before writing custom server code.
+
+## 🧪 Testing
+
+- **Command**: `npm test` runs all unit and component tests with Vitest.
+- **E2E**: `npm run test:e2e` runs Playwright browser smoke tests.
+- **Reference**: See [TESTING.md](file:///home/anthony/Projects/abaptiste-portfolio/TESTING.md).
+- Test new functions, regressions, errors, and both success and failure branches. Never commit failing tests.
